@@ -1,8 +1,7 @@
 const express = require('express')
 const router = express.Router()
-const { registerUser, loginUser, deleteUser, verifyOtp, refreshToken, timelinePosts, userPosts, updateUser, getUser, checkUsername, getBasicUserDetails, searchUser, checkEmail } = require('../controllers/user.controller')
+const { registerUser, loginUser, deleteUser, verifyOtp, refreshToken,updateUser, getUser, checkUsername, getBasicUserDetails, checkEmail } = require('../controllers/user.controller')
 const { verifyToken } = require('../middlewares/verifyToken')
-const { followUser, likeDislikePost, reactToAPost, reactedUsers } = require('../controllers/actionsController')
 const { getAllBooks, createBook, getBookDetails, getPopularBooks, searchBooks } = require('../controllers/books.controller')
 const { addorRemoveFromCart, updateQuantity } = require('../controllers/cart.controller')
 

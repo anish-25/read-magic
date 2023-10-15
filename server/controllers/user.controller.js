@@ -223,4 +223,4 @@ const searchUser = asyncHandler(async (req, res) => {
     }
 })
 
-module.exports = { registerUser, loginUser, checkUsername, checkEmail, getBasicUserDetails, updateUser, getUser, deleteUser, verifyOtp, refreshToken, timelinePosts, userPosts, searchUser }
+module.exports = { registerUser, loginUser, checkUsername, checkEmail, getBasicUserDetails, updateUser, getUser, deleteUser, verifyOtp, refreshToken, searchUser }
