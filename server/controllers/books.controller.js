@@ -42,6 +42,7 @@ const getPopularBooks = asyncHandler(async (req, res) => {
     const limit = parseInt(req.query.limit) || 10;
     const skip = (page - 1) * limit;
     const books = await Book.find().sort({ ratings_count: -1 }).limit(10).skip(skip);
+    const count = await Book.countDocuments({ ratings_count: { $gt: 100000 } });
     let booksData = await Promise.all(
       books.map(async book => {
         let response = {}
@@ -60,7 +61,7 @@ const getPopularBooks = asyncHandler(async (req, res) => {
         }
       })
     )
-    res.status(200).json(booksData);
+    res.status(200).json({count,data:booksData});
   } catch (error) {
     res.status(500).json({ error });
   }

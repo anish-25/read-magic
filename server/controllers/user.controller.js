@@ -211,37 +211,6 @@ const refreshToken = asyncHandler(async (req, res) => {
     }
 })
 
-const timelinePosts = asyncHandler(async (req, res) => {
-    try {
-        const user = await User.findById(req.params.id)
-        const page = parseInt(req.query.page) || 1
-        const limit = parseInt(req.query.limit) || 5
-
-        if (!user) res.status(400).json({ message: "User not found" })
-        const posts = await Post.find({ user: { $in: user.following } }).sort({ timestamp: -1 }).skip((page - 1) * limit).limit(limit)
-        let ownPosts = []
-        if (posts.length < limit) {
-            ownPosts = await Post.find({ user: user.id }).sort({ createdAt: 'desc' })
-        }
-        const allPosts = [...posts, ...ownPosts]
-        const replaced = await replaceWithFirebaseUrl(allPosts[0]?.length ? allPosts[0] : allPosts)
-        return res.json(!allPosts?.length && !allPosts[0]?.length ? allPosts : replaced)
-    } catch (err) {
-        return res.status(500).json(err)
-    }
-})
-
-const userPosts = asyncHandler(async (req, res) => {
-    try {
-        const user = await User.findById(req.params.id)
-        if (!user) res.status(400).json({ message: "User not found" })
-        const posts = await Post.find({ user: req.params.id }).sort({ createdAt: 'desc' })
-        const replaced = await replaceWithFirebaseUrl(posts)
-        return res.json(replaced)
-    } catch (err) {
-        return res.status(500).json(err)
-    }
-})
 
 const searchUser = asyncHandler(async (req, res) => {
     try {

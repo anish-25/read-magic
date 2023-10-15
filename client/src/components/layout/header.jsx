@@ -23,6 +23,7 @@ const Header = () => {
   const logout = useLogout()
   const [isOpen, setIsOpen] = useState(false)
   const isAuthenticated = useSelector((state) => state.auth.isAuthenticated)
+  const userCart = useSelector((state) => state.auth.user.cart)
   useEffect(() => {
     if (windowSize?.width && windowSize?.width > 767 && isOpen) {
       setIsOpen(false);
@@ -65,8 +66,13 @@ const Header = () => {
                       ) :
                         (
                           <li key={icon.name}>
-                            <CustomLink to={icon.href}
+                            <CustomLink className="relative" to={icon.href}
                             >
+                              {
+                                icon.name === "ShoppingCart" && userCart?.length ? (
+                                  <span className="absolute bottom-4 left-4 font-normal bg-[#e59499] text-white !text-xs px-1 rounded-full">{userCart?.length}</span>
+                                ):<></>
+                              }
                               <icon.icon />
                             </CustomLink>
                           </li>

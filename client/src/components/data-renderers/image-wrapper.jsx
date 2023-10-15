@@ -1,14 +1,11 @@
 import { useEffect, useState } from 'react';
-import { useSelector } from 'react-redux';
 import PropTypes from 'prop-types'
 const ImageWrapper = ({
-  srcForDarkMode,
   src,
   alt,
   ...props
 }) => {
   const [mounted, setMounted] = useState(false);
-  const theme = useSelector((state) => state.theme.theme);
 
   useEffect(() => {
     setMounted(true);
@@ -18,7 +15,7 @@ const ImageWrapper = ({
     return null;
   }
 
-  const finalSrc = theme === 'dark' ? srcForDarkMode || src : src;
+  const finalSrc = src;
 
   return <img src={finalSrc} alt={alt} {...props} />;
 };

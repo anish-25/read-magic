@@ -1,10 +1,9 @@
-import { ArrowLeft, ArrowLeftCircle, ArrowRight, ArrowRightCircle } from "lucide-react";
+import { ArrowLeft, ArrowRight } from "lucide-react";
 
 export default function Pagination({
     postsPerPage,
     totalPosts,
-    paginateFront,
-    paginateBack,
+    paginate,
     currentPage,
 }) {
 
@@ -19,7 +18,9 @@ export default function Pagination({
                 >
                     <button
                         onClick={() => {
-                            paginateBack();
+                            if (currentPage > 1) {
+                                paginate(currentPage - 1);
+                            }
                         }}
                         href='#'
                         className='relative inline-flex items-center px-2 py-2 rounded-l-md bg-white text-sm font-medium text-gray-500 hover:bg-gray-100 transition-all'
@@ -29,9 +30,9 @@ export default function Pagination({
                     <div className="flex justify-between w-full items-center space-x-4 !mx-10 text-sm font-semibold">
                         {
                             Array.from({ length: Math.ceil(totalPosts / postsPerPage) }, (_, index) => (
-                                index + 1 <= 6 || index + 1 == Math.ceil(totalPosts / postsPerPage) - 1 || index + 1 === Math.ceil(totalPosts / postsPerPage) ?
-                                    <span key={index} className={index + 1 === currentPage ? "text-[#e59499] cursor-pointer" : "text-gray-600 hover:text-[#e59499] cursor-pointer transition-all"}>{index + 1}</span>
-                                    : index + 1 === 7 ?
+                                index + 1 == currentPage - 1 || (index + 1 >= currentPage && index + 1 < currentPage + 6 && index + 1 !== Math.ceil(totalPosts / postsPerPage) - 4) || (index + 1 >= Math.ceil(totalPosts / postsPerPage) - 1) ?
+                                    <span key={index} onClick={() => paginate(index + 1)} className={index + 1 === currentPage ? "text-[#e59499] cursor-pointer" : "text-gray-600 hover:text-[#e59499] cursor-pointer transition-all"}>{index + 1}</span>
+                                    : index + 1 === Math.ceil(totalPosts / postsPerPage) - 4 ?
                                         <span key={index} className="text-gray-600">...</span>
                                         : null
                             ))
@@ -39,7 +40,9 @@ export default function Pagination({
                     </div>
                     <button
                         onClick={() => {
-                            paginateFront();
+                            if (currentPage < Math.ceil(totalPosts / postsPerPage)) {
+                                paginate(currentPage + 1);
+                            }
                         }}
                         href='#'
                         className='relative inline-flex items-center px-2 py-2 rounded-r-md bg-white text-sm font-medium text-gray-500 hover:bg-gray-100 transition-all'

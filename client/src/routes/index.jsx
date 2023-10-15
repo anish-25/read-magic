@@ -9,6 +9,7 @@ import Container from '../components/layout/container'
 
 import { pathsWithoutHeader } from "./paths"
 import NotFound from '../pages/not-found/NotFound'
+import Footer from '../components/layout/footer'
 
 const AllRoutes = () => {
     const location = useLocation()
@@ -46,6 +47,7 @@ const AllRoutes = () => {
                     <Route path="*" element={<NotFound />} />
                 </Routes>
             </Container>
+            {hideHeader ? null : <Footer />}
         </>
     )
 }

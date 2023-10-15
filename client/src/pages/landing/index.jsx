@@ -17,7 +17,7 @@ const LandingPage = () => {
     const dispatch = useDispatch()
     const pageLoader = useSelector((state) => state.loader.pageLoader)
     const fetchBooks = () => {
-        getPopularBooks().then(res => dispatch(setBooks(res.data))).finally(() => {
+        getPopularBooks().then(res => dispatch(setBooks(res.data?.data))).finally(() => {
             dispatch(hideLoader('pageLoader'))
         })
     }
@@ -46,9 +46,6 @@ const LandingPage = () => {
                         <BookCard book={book} key={book?._id} />
                     ))
                 }
-            </div>
-            <div className="">
-                <Pagination postsPerPage={10} totalPosts={90} paginateFront={() => {}} paginateBack={() => {}} currentPage={2}/>
             </div>
         </>
     )
