@@ -35,8 +35,8 @@ const LandingPage = () => {
     if(pageLoader) return <Loader />
     return (
         <>
-            <div className="flex justify-center items-center gap-24 min-h-[500px]">
-                <div className="flex">
+            <div className="flex justify-center items-center gap-24 min-h-[500px] w-full">
+                <div className="max-w-[80vw] !overflow-hidden">
                     <HeroCarousel slideImages={slideImages} />
                 </div>
             </div>
