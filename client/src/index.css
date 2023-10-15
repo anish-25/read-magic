@@ -1,0 +1,98 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+:root {
+  --app-gray-default: 255 255 255;
+  --app-gray-50: 249 250 251;
+  --app-gray-100: 243 244 246;
+  --app-gray-200: 229 231 235;
+  --app-gray-300: 209 213 219;
+  --app-gray-400: 156 163 175;
+  --app-gray-500: 107 114 128;
+  --app-gray-600: 75 85 99;
+  --app-gray-700: 55 65 81;
+  --app-gray-800: 31 41 55;
+  --app-gray-900: 17 24 39;
+  --app-gray-950: 3 7 18;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  font-family: "Montserrat", sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.carousel-slide {
+  display: none;
+  animation: fade 5s linear infinite;
+}
+
+.carousel-slide:first-child {
+  display: block;
+}
+
+@keyframes fade {
+  0%,
+  100% {
+    opacity: 0;
+  }
+  25% {
+    opacity: 1;
+  }
+  75% {
+    opacity: 1;
+  }
+}
+
+.carousel-nav-button {
+  transition: background-color 0.3s;
+}
+
+.carousel-nav-button:hover {
+  background-color: #3498db;
+}
+
+/* Width and color of the scrollbar track */
+::-webkit-scrollbar {
+  width: 8px;
+  background-color: #f1f1f1;
+}
+
+/* Handle (thumb) of the scrollbar */
+::-webkit-scrollbar-thumb {
+  background-color: #e59499;
+}
+
+/* When hovering over the scrollbar */
+::-webkit-scrollbar-thumb:hover {
+  background: #e6787f;
+}
+
+.bouncing-loader {
+  display: flex;
+  justify-content: center;
+}
+
+.bouncing-loader > div {
+  margin: 3px 6px;
+  border-radius: 50%;
+  opacity: 1;
+  animation: bouncing-loader 0.6s infinite alternate;
+}
+
+@keyframes bouncing-loader {
+  to {
+    opacity: 0.1;
+    transform: translateY(-16px);
+  }
+}
+
+.bouncing-loader > div:nth-child(2) {
+  animation-delay: 0.2s;
+}
+
+.bouncing-loader > div:nth-child(3) {
+  animation-delay: 0.4s;
+}
