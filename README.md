@@ -10,6 +10,7 @@ The Read Magic application is live and can be accessed at the following URL:
 [Read Magic App](https://readmagic.vercel.app/)
 For server,
 [Read Magic Server](https://read-magic-server.vercel.app/api/)
+Click on the Profile icon at the top right to either [Sign in](https://readmagic.vercel.app/sign-in) or [Sign up](https://readmagic.vercel.app/sign-up)
 
 ## Installation Instructions
 
