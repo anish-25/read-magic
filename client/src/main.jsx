@@ -5,12 +5,12 @@ import './index.css'
 import { BrowserRouter } from 'react-router-dom'
 import store from './store/store.js'
 import { Provider } from 'react-redux'
-import Analytics from '@vercel/analytics'
+import {Analytics} from '@vercel/analytics/react'
 
 ReactDOM.createRoot(document.getElementById('root')).render(
   <Provider store={store}>
     <BrowserRouter>
-      <Analytics />
+      <Analytics /> 
       <App />
     </BrowserRouter>
   </Provider>
