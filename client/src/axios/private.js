@@ -2,7 +2,6 @@ import axios from 'axios'
 import store from '../store/store'
 const instance = axios.create({
     baseURL: import.meta.env.VITE_SERVER_URL,
-    timeout: 1000
 })
 instance.interceptors.request.use(
     (config) => {

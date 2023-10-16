@@ -15,7 +15,7 @@ function Carousel({ slideImages, heading }) {
     return (
         <div className="container">
             {heading ?
-                <Typography className="md:text-xl text-lg font-semibold text-[#bfb9b9] -mb-8 mt-4">{heading}</Typography>
+                <Typography className="md:text-xl text-base font-semibold text-[#bfb9b9] text-center -mb-12 mt-6">{heading}</Typography>
                 : <></>}
             <Swiper
                 effect={'coverflow'}

@@ -29,6 +29,7 @@ const SearchModal = () => {
     const [searchResults, setSearchResults] = useState([])
     const [open, setIsOpen] = useState(false)
     const handleChange = (e) => {
+        setSearchResults([])
         setSearchTerm(e.target.value)
     }
     useMemo(() => {
@@ -87,18 +88,18 @@ const SearchModal = () => {
         }
     }, [searchResults]);
     return (
-        <Dialog open={open} onOpenChange={setIsOpen}>
+        <Dialog open={open} onOpenChange={() => { setIsOpen(prev => !prev); setSearchTerm("") }}>
             <DialogTrigger className="text-center flex items-center justify-center"><Search className="text-gray-600" /></DialogTrigger>
             <DialogContent className="bg-white">
                 <DialogHeader>
                     <DialogTitle className="text-sm text-left md:text-lg md:text-center">Search for a book using title or author</DialogTitle>
                     <DialogDescription className={'min-h-[50vh] rounded px-3 flex flex-col gap-8 justify-center items-center'}>
                         <FormInput name="search" value={searchTerm} error={false} errorMessage={""} onChange={handleChange} label={""} Icon={Search} placeholder={"Angels & Demons or J.K Rowling"} type={"text"} />
-                        <div id="scrollableDiv" className="w-full flex flex-col min-h-[60vh]  max-h-[60vh] overflow-y-auto gap-3">
+                        <div id="scrollableDiv" className="w-full flex flex-col justify-center items-center min-h-[60vh]  max-h-[60vh] overflow-y-auto gap-3">
                             {
                                 searchTerm?.length ?
                                     loading ?
-                                        <div className="w-full h-full flex justify-center items-center">
+                                        <div className="w-full h-full min-h-[40vh] flex justify-center items-center">
                                             <BouncingDotsLoader className={"bg-[#e59499]"} />
                                         </div>
                                         :
@@ -107,11 +108,15 @@ const SearchModal = () => {
                                                 <NotFound message={"No books found"} />
                                             </div>
                                             :
-                                            searchResults?.map((book) => {
-                                                return (
-                                                    <SearchedBook setIsOpen={setIsOpen} key={book?.id} book={book} />
-                                                )
-                                            })
+                                            <div className="w-full h-full min-h-[40vh] flex flex-col py-4 justify-start items-center">
+                                                {
+                                                    searchResults?.map((book) => {
+                                                        return (
+                                                            <SearchedBook setIsOpen={setIsOpen} key={book?.id} book={book} />
+                                                        )
+                                                    })
+                                                }
+                                            </div>
                                     :
                                     <div className="flex flex-col w-full justify-center items-center h-full gap-8">
                                         <ImageWrapper className={'w-[50%]'} src={images.SearchModalImage} />

@@ -123,7 +123,6 @@ const searchBooks = async (req, res) => {
         { authors: { $regex: searchTerm, $options: 'i' } },
         { isbn: { $regex: searchTerm, $options: 'i' } },
         { publisher: { $regex: searchTerm, $options: 'i' } },
-        { isbn13: { $regex: searchTerm, $options: 'i' } }
       ],
     })
       .skip(skip)

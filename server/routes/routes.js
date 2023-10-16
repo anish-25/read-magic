@@ -1,6 +1,11 @@
 const express = require('express')
 const router = express.Router()
-const { registerUser, loginUser, deleteUser, verifyOtp, refreshToken, updateUser, getUser, checkUsername, getBasicUserDetails, checkEmail } = require('../controllers/user.controller')
+const multer = require('multer')
+
+const storage = multer.memoryStorage();
+const upload = multer({ storage, limits: { fileSize: 10 * 1024 * 1024 } })
+
+const { registerUser, loginUser, deleteUser, verifyOtp, refreshToken, updateUser, getUser, checkUsername, getBasicUserDetails, checkEmail, uploadProfilePic } = require('../controllers/user.controller')
 const { verifyToken } = require('../middlewares/verifyToken')
 const { getAllBooks, createBook, getBookDetails, getPopularBooks, searchBooks, getNewlyPublishedBooks } = require('../controllers/books.controller')
 const { addorRemoveFromCart, updateQuantity } = require('../controllers/cart.controller')
@@ -21,7 +26,7 @@ router.get('/user-details/:id', getBasicUserDetails)
 
 //-----------User-------------------------------//
 router.route('/user/:id').get(verifyToken, getUser).delete(verifyToken, deleteUser).put(verifyToken, updateUser)
-
+router.post('/profile-pic', [verifyToken, upload.single('file')], uploadProfilePic)
 
 
 //-----------Books---------------------//

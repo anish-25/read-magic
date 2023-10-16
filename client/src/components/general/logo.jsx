@@ -4,7 +4,7 @@ import Typography from "./typography"
 const Logo = () => {
     const navigate = useNavigate()
     return (
-        <Typography variant="h1" className="!text-[#e59499] hover:!text-[#ef6770] transition-all !text-2xl font-bold cursor-pointer" onClick={() => { navigate('/'); window.scroll({ top: 0, behavior: 'smooth' }) }}>
+        <Typography variant="h1" className="!text-[#e59499] hover:!text-[#ef6770] transition-all !text-xl md:!text-2xl font-bold cursor-pointer" onClick={() => { navigate('/'); window.scroll({ top: 0, behavior: 'smooth' }) }}>
             {'ReadMagic'}
         </Typography>
     )

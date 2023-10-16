@@ -2,9 +2,18 @@ const asyncHandler = require('express-async-handler')
 const User = require('../models/user.model')
 const bcrypt = require('bcryptjs')
 const jwt = require('jsonwebtoken')
-const { createTokens } = require('../utils/helpers')
+const { createTokens, getFireBaseUrl } = require('../utils/helpers')
 const { default: mongoose } = require('mongoose')
 require('dotenv').config()
+const firebase = require('../firebase')
+
+
+const admin = require('firebase-admin');
+const serviceAccount = require('../firebase-cred.json')
+admin.initializeApp({
+    credential: admin.credential.cert(serviceAccount),
+    storageBucket: 'gs://readmagic-1acec.appspot.com'
+});
 
 const registerUser = asyncHandler(async (req, res) => {
     const { name, username, email, password } = req.body
@@ -105,8 +114,8 @@ const getUser = asyncHandler(async (req, res) => {
         if (mongoose.Types.ObjectId.isValid(identifier)) {
             const user = await User.findById(identifier)
             if (user) {
+                await getFireBaseUrl(user)
                 const { password, ...rest } = user._doc
-                console.log(rest)
                 return res.status(200).json(rest)
             }
             return res.status(400).json({ message: "User doesn't exist" })
@@ -195,7 +204,6 @@ const deleteUser = asyncHandler(async (req, res) => {
 })
 
 const refreshToken = asyncHandler(async (req, res) => {
-    // let token = req.cookies.refreshToken
     let token = req.body.refreshToken
     if (token) {
         jwt.verify(token, process.env.REFRESH_TOKEN_SECRET, (async (err, decoded) => {
@@ -222,4 +230,38 @@ const searchUser = asyncHandler(async (req, res) => {
     }
 })
 
-module.exports = { registerUser, loginUser, checkUsername, checkEmail, getBasicUserDetails, updateUser, getUser, deleteUser, verifyOtp, refreshToken, searchUser }
+
+const uploadProfilePic = asyncHandler(async (req, res) => {
+    try {
+        const file = req.file;
+        const userId = req?.user?.id
+        if (!file) {
+            return res.status(400).json({ error: 'No file received' });
+        }
+
+        const bucket = admin.storage().bucket();
+        const allowedMimeTypes = ['image/jpeg', 'image/png', 'image/jpg', 'image/webp']
+        if (!allowedMimeTypes.includes(file.mimetype)) {
+            return res.status(400).send('File is not a valid image.');
+        }
+        let dest = `avatars/${userId}.png`
+        const blob = bucket.file(dest);
+        const blobStream = blob.createWriteStream();
+        blobStream.on('error', (error) => {
+            return res.status(500).json({ error: 'Failed to upload file' });
+        });
+
+        blobStream.on('finish', async () => {
+            const storageRef = firebase.storage().ref('avatars/' + req.user.id + '.png')
+            const url = await storageRef.getDownloadURL();
+            return res.status(200).json({ url });
+        });
+
+        blobStream.end(file.buffer);
+    } catch (err) {
+        return res.status(500).json(err)
+    }
+})
+
+
+module.exports = { registerUser, loginUser, checkUsername, checkEmail, getBasicUserDetails, updateUser, uploadProfilePic, getUser, deleteUser, verifyOtp, refreshToken, searchUser }

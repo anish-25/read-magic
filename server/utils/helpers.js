@@ -1,8 +1,10 @@
 const jwt = require('jsonwebtoken')
+const firebase = require('../firebase')
 
-const createTokens = (user, req, res) => {
+const createTokens = async (user, req, res) => {
   const accessToken = jwt.sign({ "username": user.name, "id": user.id, "isAdmin": user.isAdmin }, process.env.ACCESS_TOKEN_SECRET, { expiresIn: '1d' })
   const refreshToken = jwt.sign({ "username": user.name, "id": user.id, "isAdmin": user.isAdmin }, process.env.REFRESH_TOKEN_SECRET, { expiresIn: '1d' })
+  await getFireBaseUrl(user)
   res.status(201)
   let { password, isAdmin, createdAt, updatedAt, _id, ...filtered } = user._doc
   return res.json({
@@ -11,5 +13,10 @@ const createTokens = (user, req, res) => {
     refreshToken: { token: refreshToken, maxAge: 300 * 1000 },
   })
 }
+const getFireBaseUrl = async (user) => {
+  const storageRef = firebase.storage().ref('avatars/' + user.id + '.png')
+  const url = await storageRef.getDownloadURL();
+  user.avatar = url
+}
 
-module.exports = { createTokens }
+module.exports = { createTokens, getFireBaseUrl }

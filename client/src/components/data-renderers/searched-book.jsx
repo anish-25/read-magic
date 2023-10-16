@@ -11,7 +11,7 @@ const SearchedBook = ({ book,setIsOpen }) => {
       </div>
       <div className="w-[80%] flex justify-start items-start text-left px-4 flex-col">
         <Typography variant="h3" className="md:!text-lg !text-sm">{book?.title}</Typography>
-        <Typography className={'text-gray-600 font-sans text-xs md:text-sm font-normal leading-normal capitalize min-h-[30px]'}>{book?.authors}</Typography>
+        <Typography className={'text-gray-600 font-sans text-xs md:text-sm font-normal leading-normal capitalize min-h-[30px] text-left'}>{book?.authors}</Typography>
         <Rating rating_value={book?.average_rating} numberOfReviews={book?.ratings_count} />
       </div>
     </div>

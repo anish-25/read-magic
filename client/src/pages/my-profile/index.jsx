@@ -1,16 +1,18 @@
 import { MailCheck, Pen, Phone, User, UserCog2 } from "lucide-react"
 import { UserProfile } from "../../components/general/avatar"
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { updateUserDetails } from "../../slices/authSlice";
 import FormInput from "../../components/general/form-input";
 import Button from "../../components/general/button";
 import { hideLoader, showLoader } from "../../slices/loaderSlice";
-import { updateUser } from "../../services/user.services";
+import { updateProfilePic, updateUser } from "../../services/user.services";
+import Loader from "../../components/layout/loader";
 
 const ProfilePage = () => {
     const fileInputRef = useRef(null);
     const [editing, setEditing] = useState(false)
+    const [loader, setLoader] = useState(true)
     const dispatch = useDispatch();
     const user = useSelector((state) => state.auth.user);
     const profileSaveButton = useSelector((state) => state.loader.profileSaveButton);
@@ -26,6 +28,14 @@ const ProfilePage = () => {
         mobile: user?.mobile,
         username: user?.username,
     })
+
+    useEffect(() => {
+        setTimeout(() => {
+            setLoader(false)
+        }, 1000)
+    }, [])
+
+
     const handleProfilePicClick = () => {
         fileInputRef.current.click();
     };
@@ -33,8 +43,13 @@ const ProfilePage = () => {
     const handleFileInputChange = (event) => {
         const selectedFile = event.target.files[0];
         if (selectedFile) {
-            const url = URL.createObjectURL(selectedFile);
-            dispatch(updateUserDetails({ avatar: url }));
+            const formData = new FormData();
+            formData.append('file', selectedFile);
+            updateProfilePic(formData).then(
+                (res) => {
+                    dispatch(updateUserDetails({ avatar: res?.data?.url }));
+                }
+            )
         }
     };
     const handleChange = (e) => {
@@ -76,6 +91,7 @@ const ProfilePage = () => {
             setEditing(false)
         })
     }
+    if (loader) return <Loader />
     return (
         <>
             <form className="sm:w-[500px] w-full flex p-4 flex-col items-center justify-start min-h-[75vh] border rounded-md border-gray-200 shadow-md">
@@ -100,10 +116,10 @@ const ProfilePage = () => {
                     {
                         editing ? (
                             <div className="w-full flex md:flex-row flex-col gap-4 md:space-x-4 justify-center items-center">
-                                <Button onClick={(e) => { e.preventDefault(); setUserInputs(user); dispatch(hideLoader('profileSaveButton')); setEditing(false); setErrors({ name: { state: false, message: '' }, mobile: { state: false, message: '' }, email: { state: false, message: '' }, username: { state: false, message: '' } }) }} className=" min-h-5 h-9 py-0 rounded-2xl text-xs md:text-base">
+                                <Button type="button" onClick={(e) => { e.preventDefault(); setUserInputs(user); dispatch(hideLoader('profileSaveButton')); setEditing(false); setErrors({ name: { state: false, message: '' }, mobile: { state: false, message: '' }, email: { state: false, message: '' }, username: { state: false, message: '' } }) }} className=" min-h-5 h-9 py-0 rounded-2xl text-xs md:text-base">
                                     Cancel
                                 </Button>
-                                <Button loader={profileSaveButton} onClick={handleSave} className=" min-h-5 h-9 py-0 bg-[#e59499] hover:bg-[#d7858a] rounded-2xl text-xs md:text-base">
+                                <Button type="submit" loader={profileSaveButton} onClick={handleSave} className=" min-h-5 h-9 py-0 bg-[#e59499] hover:bg-[#d7858a] rounded-2xl text-xs md:text-base">
                                     Save
                                 </Button>
                             </div>

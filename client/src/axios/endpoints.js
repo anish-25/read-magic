@@ -10,6 +10,7 @@ export const publicEndpoints = {
     search: '/books/search',
     newlyPublished: '/books/newest',
     user: '/user',
+    profilePic: '/profile-pic',
 }
 
 export const privateEndpoints = {
