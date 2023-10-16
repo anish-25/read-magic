@@ -16,6 +16,7 @@ import SearchModal from "../modals/search-modal"
 import Typography from "../general/typography"
 import useLogout from "../../hooks/useLogout"
 import ImageWrapper from "../data-renderers/image-wrapper"
+import { UserProfile } from "../general/avatar"
 
 const Header = () => {
   const scrolled = useScroll(40)
@@ -151,13 +152,7 @@ const Header = () => {
                             }}>
                               <CustomLink className="flex space-x-2 items-center justify-center" to={icon.href}
                               >
-                                {
-                                  avatar ? (
-                                    <ImageWrapper src={avatar} alt="User Avatar" width={30} height={30} />
-                                  ) : (
-                                    <span className="text-white text-sm font-semibold w-7 h-7 bg-green-700 rounded-full flex items-center justify-center">{name.charAt(0).toUpperCase()}</span>
-                                  )
-                                }
+                              <UserProfile className="h-8  w-8 text-6xl cursor-pointer" />
                                 <Typography className="text-base">{icon.name}</Typography>
                               </CustomLink>
                             </li>

@@ -143,27 +143,38 @@ const getBasicUserDetails = asyncHandler(async (req, res) => {
 
 const updateUser = asyncHandler(async (req, res) => {
     try {
-        const userId = req.params.id
-        const user = await User.findById(userId)
+        const userId = req.params.id;
+        const user = await User.findById(userId);
+
         if (user) {
             if (req.user.id == req.params.id || req.user.isAdmin) {
-                const { email, isEmailVerified, _id, followers, following, isAdmin, posts, createdAt, updatedAt, ...rest } = req.body
+                const { email, username, isEmailVerified, _id, isAdmin, createdAt, updatedAt, ...rest } = req.body;
+
                 if (rest.password) {
-                    const salt = await bcrypt.genSalt(10)
-                    const hashedPass = await bcrypt.hash(rest.password, salt)
-                    rest.password = hashedPass
+                    const salt = await bcrypt.genSalt(10);
+                    const hashedPass = await bcrypt.hash(rest.password, salt);
+                    rest.password = hashedPass;
                 }
-                await user.updateOne({ $set: rest })
-                return res.json({ message: "Updated user successfully" })
+                const updatedUser = await User.findByIdAndUpdate(userId, { $set: rest }, { new: true });
+                if (updatedUser) {
+                    let filtered = {
+                        name: updatedUser.name,
+                        username: updatedUser.username,
+                        email: updatedUser.email,
+                        mobile: updatedUser.mobile,
+                    };
+                    return res.status(200).json(filtered);
+                }
+                return res.status(400).json({ message: "User update failed" });
             }
-            return res.status(403).json({ message: "Unauthorized" })
+            return res.status(403).json({ message: "Unauthorized" });
         }
-        return res.status(400).json({ message: "User doesn't exist" })
+        return res.status(400).json({ message: "User doesn't exist" });
+    } catch (err) {
+        res.status(500).json(err);
     }
-    catch (err) {
-        res.status(500).json(err)
-    }
-})
+});
+
 
 const deleteUser = asyncHandler(async (req, res) => {
     try {

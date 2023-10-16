@@ -1,8 +1,7 @@
-import { useDispatch } from "react-redux"
 import { publicEndpoints } from "../axios/endpoints"
 import axios from "../axios/gateWay"
 import { login } from "../slices/authSlice"
-import { hideLoader, showLoader } from "../slices/loaderSlice"
+import { hideLoader } from "../slices/loaderSlice"
 
 export const handleSignIn = (userInputs) => {
    return axios.post(publicEndpoints.signIn, userInputs)
@@ -20,9 +19,9 @@ export const handleSignUp = (userInputs) => {
    return axios.post(publicEndpoints.signUp, userInputs)
 }
 
-export const handleRefresh = (token,dispatch,navigate) => {
+export const handleRefresh = (token, dispatch, navigate) => {
    return axios.post(publicEndpoints.refresh, { refreshToken: token }).then(res => {
-      if(res?.data?.accessToken) {
+      if (res?.data?.accessToken) {
          let data = {
             accessToken: res?.data?.accessToken,
             refreshToken: res?.data?.refreshToken,
@@ -33,6 +32,7 @@ export const handleRefresh = (token,dispatch,navigate) => {
          dispatch(login(data))
       }
    }).catch(err => {
+      console.log(err)
       navigate('/sign-in')
    }).finally(() => {
       dispatch(hideLoader('pageLoader'))

@@ -6,6 +6,7 @@ const initialState = {
     signInButton: false,
     signUpButton: false,
     proceedToCheckoutButton:false,
+    profileSaveButton:false,
 }
 
 const loaderSlice = createSlice({
