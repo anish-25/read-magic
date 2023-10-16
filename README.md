@@ -4,6 +4,13 @@
 
 Read Magic is an innovative online book store application designed to bring the world of literature to your fingertips. With a vast collection of books spanning various genres, this platform allows book enthusiasts to explore, discover, and purchase their favorite reads from the comfort of their own devices. Whether you're into classic literature, contemporary fiction, non-fiction, or anything in between, Read Magic has a book for you. Explore the magic of literature and embark on a journey through the pages of countless stories right from your browser or mobile device.
 
+## Deployment
+
+The Read Magic application is live and can be accessed at the following URL:
+[Read Magic App](https://readmagic.vercel.app/)
+For server,
+[Read Magic Server](https://read-magic-server.vercel.app/api/)
+
 ## Installation Instructions
 
 **Client:**
