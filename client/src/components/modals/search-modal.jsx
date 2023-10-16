@@ -88,7 +88,7 @@ const SearchModal = () => {
     }, [searchResults]);
     return (
         <Dialog open={open} onOpenChange={setIsOpen}>
-            <DialogTrigger><Search className="text-gray-600" /></DialogTrigger>
+            <DialogTrigger className="text-center flex items-center justify-center"><Search className="text-gray-600" /></DialogTrigger>
             <DialogContent className="bg-white">
                 <DialogHeader>
                     <DialogTitle className="text-sm text-left md:text-lg md:text-center">Search for a book using title or author</DialogTitle>

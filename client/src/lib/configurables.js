@@ -10,8 +10,12 @@ export const NavbarLinks = [
         label: "Popular",
     },
     {
-        href: "/best-sellers",
-        label: "Best Sellers",
+        href: "/services",
+        label: "Services",
+    },
+    {
+        href: "/contact",
+        label: "Contact",
     }
 ]
 
@@ -68,7 +72,7 @@ export const mobileNavIcons = [
         private: false
     },
     {
-        href: "/profile",
+        href: "/my-profile",
         icon: User,
         name: "Profile",
         private: true

@@ -35,7 +35,7 @@ const Header = () => {
   return (
     <header id="header" className={mergeClasses(
       'sticky top-0 z-30 w-full border-b border-transparent bg-gray max-md:border-gray-200 transition-colors duration-300',
-      scrolled ? 'bg-gray/25 backdrop-blur-md md:border-gray-100' : '',
+      scrolled ? 'bg-gray-100/25 backdrop-blur-md md:border-gray-100' : '',
     )}>
       <div className="mx-auto flex w-full md:min-h-[80px] max-w-7xl items-center justify-between p-4 md:px-8">
         <Logo />
@@ -70,7 +70,7 @@ const Header = () => {
                             >
                               {
                                 icon.name === "ShoppingCart" && userCart?.length ? (
-                                  <span className="absolute bottom-4 left-4 font-normal bg-[#e59499] text-white !text-xs px-1 rounded-full">{userCart?.length}</span>
+                                  <span className="absolute bottom-4 left-4 font-semibold bg-[#e59499] text-white !text-[10px] flex justify-center items-center px-1 h-4 w-4 text-center rounded-full">{userCart?.length}</span>
                                 ):<></>
                               }
                               <icon.icon />

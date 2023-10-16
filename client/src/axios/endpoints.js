@@ -8,6 +8,7 @@ export const publicEndpoints = {
     checkUsername: '/username',
     checkEmail: '/email',
     search: '/books/search',
+    newlyPublished: '/books/newest',
 }
 
 export const privateEndpoints = {

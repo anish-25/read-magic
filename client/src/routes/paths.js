@@ -9,6 +9,7 @@ export const paths = {
     success: '/success',
     orders: '/my-orders',
     popular: '/popular-books',
+    profile: '/my-profile',
 }
 
 export const pathsWithoutHeader = [

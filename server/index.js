@@ -51,7 +51,7 @@ app.post('/api/upload', [verifyToken, upload.single("file")], (req, res) => {
     }
 })
 
-app.use('/images', express.static(path.join(__dirname, 'public/images')))
+app.use('/images', express.static(path.join(__dirname, 'public')))
 
 app.use('/api', require('./routes/routes'))
 

@@ -12,6 +12,7 @@ import CheckoutPage from "../pages/checkout";
 import SuccessPage from "../pages/success";
 import OrdersPage from "../pages/my-orders";
 import PopularPage from "../pages/popular";
+import ProfilePage from "../pages/my-profile";
 
 const components = {
     home: () => <LoaderHoc Component={LandingPage} />,
@@ -52,6 +53,10 @@ export const privateRoutes = [
     {
         path: paths.orders,
         element: <OrdersPage />,
+    },
+    {
+        path: paths.profile,
+        element: <ProfilePage />,
     }
 ]
 

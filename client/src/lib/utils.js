@@ -18,3 +18,10 @@ export const validateEmail = (email) => {
 export const validatePassword = (password) => {
   return password.length >= 8
 }
+
+export const replaceZoomInUrl = (url, newZoomValue) => {
+  var regex = /(http:\/\/|https:\/\/)([^&]*)/;
+  var newUrl = url.replace(regex, 'https://$2');
+  newUrl = newUrl.replace(/(\bzoom=)(\d+)/, '$1' + newZoomValue);
+  return newUrl;
+}

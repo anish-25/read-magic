@@ -5,6 +5,7 @@ const booksSlice = createSlice({
     initialState: {
         books: undefined,
         popularBooks: undefined,
+        newlyPublished: undefined
     },
     reducers: {
         setBooks: (state, action) => {
@@ -12,9 +13,12 @@ const booksSlice = createSlice({
         },
         setPopularBooks: (state, action) => {
             state.popularBooks = action.payload;
+        },
+        setNewlyPublished: (state, action) => {
+            state.newlyPublished = action.payload;
         }
     },
 })
 
-export const { setBooks,setPopularBooks } = booksSlice.actions
+export const { setBooks, setPopularBooks, setNewlyPublished } = booksSlice.actions
 export default booksSlice.reducer

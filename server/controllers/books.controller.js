@@ -9,7 +9,7 @@ const getAllBooks = asyncHandler(async (req, res) => {
   try {
     const page = parseInt(req.query.page) || 1;
     const limit = parseInt(req.query.limit) || 10;
-    const { authors, title, publisher, ids } = req.query;
+    const { authors, title, publisher, ids, isbn, isbn13 } = req.query;
     const searchCriteria = {};
 
     if (authors) {
@@ -24,6 +24,12 @@ const getAllBooks = asyncHandler(async (req, res) => {
     if (ids) {
       const bookIds = ids.split(',').map((id) => id.trim());
       searchCriteria._id = { $in: bookIds };
+    }
+    if (isbn) {
+      searchCriteria.isbn = new RegExp(isbn, 'i');
+    }
+    if (isbn13) {
+      searchCriteria.isbn13 = new RegExp(isbn13, 'i');
     }
     const skip = (page - 1) * limit;
     const books = await Book.find(searchCriteria)
@@ -61,7 +67,7 @@ const getPopularBooks = asyncHandler(async (req, res) => {
         }
       })
     )
-    res.status(200).json({count,data:booksData});
+    res.status(200).json({ count, data: booksData });
   } catch (error) {
     res.status(500).json({ error });
   }
@@ -115,6 +121,9 @@ const searchBooks = async (req, res) => {
       $or: [
         { title: { $regex: searchTerm, $options: 'i' } },
         { authors: { $regex: searchTerm, $options: 'i' } },
+        { isbn: { $regex: searchTerm, $options: 'i' } },
+        { publisher: { $regex: searchTerm, $options: 'i' } },
+        { isbn13: { $regex: searchTerm, $options: 'i' } }
       ],
     })
       .skip(skip)
@@ -126,4 +135,35 @@ const searchBooks = async (req, res) => {
   }
 };
 
-module.exports = { getAllBooks, createBook, getBookDetails, getPopularBooks, searchBooks }
+const getNewlyPublishedBooks = asyncHandler(async (req, res) => {
+  try {
+    const page = parseInt(req.query.page) || 1;
+    const limit = parseInt(req.query.limit) || 10;
+    const skip = (page - 1) * limit;
+    const books = await Book.find().sort({ publication_date: -1 }).limit(10).skip(skip);
+    const count = await Book.countDocuments({ ratings_count: { $gt: 100000 } });
+    let booksData = await Promise.all(
+      books.map(async book => {
+        let response = {}
+        try {
+          response = await axios.get(`${googleBooksApi}/?q=isbn:${book.isbn}`);
+        } catch (err) {
+          response = {}
+        }
+        let description = "Description not available"
+        if (response?.data?.items && response.data?.items[0]?.volumeInfo?.description) {
+          description = response.data.items[0]?.volumeInfo?.description
+        }
+        return {
+          ...book?._doc,
+          description
+        }
+      })
+    )
+    res.status(200).json({ count, data: booksData });
+  } catch (error) {
+    res.status(500).json(error);
+  }
+})
+
+module.exports = { getAllBooks, createBook, getBookDetails, getPopularBooks, searchBooks, getNewlyPublishedBooks }

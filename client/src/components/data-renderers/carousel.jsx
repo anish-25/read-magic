@@ -1,89 +1,63 @@
-// import './styles.css';
-import '../../assets/css/carousel.css';
-import { AnimatePresence, motion } from 'framer-motion';
-import { useEffect, useState } from 'react';
-import ImageWrapper from './image-wrapper';
+import { Swiper, SwiperSlide } from 'swiper/react';
 
-export default function Caraousel({slideImages}) {
-    const [[activeIndex, direction], setActiveIndex] = useState([0, 0]);
-    const items = ['🍔', '🍕', '🌭', '🍗'];
+import 'swiper/css';
+import 'swiper/css/effect-coverflow';
+import 'swiper/css/pagination';
+import 'swiper/css/navigation';
+import { Pagination, EffectCoverflow, Navigation } from 'swiper/modules';
+import { useNavigate } from 'react-router-dom';
+import Typography from '../general/typography';
+import useWindowSize from '../../hooks/useWindowSize';
 
-    // we want the scope to be always to be in the scope of the array so that the carousel is endless
-    const indexInArrayScope =
-        ((activeIndex % items.length) + items.length) % items.length;
-
-    // so that the carousel is endless, we need to repeat the items twice
-    // then, we slice the the array so that we only have 3 items visible at the same time
-    const visibleItems = [...items, ...items].slice(
-        indexInArrayScope,
-        indexInArrayScope + 3
-    );
-    const handleClick = newDirection => {
-        setActiveIndex(prevIndex => [prevIndex[0] + newDirection, newDirection]);
-    };
-    useEffect(() => {
-        const interval = setInterval(() => {
-            handleClick(1);
-        }, 3000);
-        return () => clearInterval(interval);
-    })
+function Carousel({ slideImages, heading }) {
+    const navigate = useNavigate();
+    const { width } = useWindowSize()
     return (
-        <div className="main-wrapper">
-            <div className="wrapper">
-                <AnimatePresence mode="popLayout" initial={false}>
-                    {visibleItems.map((item,index) => {
-                        return (
-                            <motion.div
-                                className="card hover:scale-105"
-                                key={item}
-                                layout
-                                custom={{
-                                    direction,
-                                    position: () => {
-                                        if (item === visibleItems[0]) {
-                                            return 'left';
-                                        } else if (item === visibleItems[1]) {
-                                            return 'center';
-                                        } else {
-                                            return 'right';
-                                        }
-                                    },
-                                }}
-                                variants={variants}
-                                initial="enter"
-                                animate="center"
-                                exit="exit"
-                                transition={{ duration: 1 }}
-                            >
-                                <ImageWrapper src={slideImages[index]}/>
-                            </motion.div>
-                        );
-                    })}
-                </AnimatePresence>
-            </div>
-        </div>
+        <div className="container">
+            {heading ?
+                <Typography className="md:text-xl text-lg font-semibold text-[#bfb9b9] -mb-8 mt-4">{heading}</Typography>
+                : <></>}
+            <Swiper
+                effect={'coverflow'}
+                grabCursor={true}
+                centeredSlides={true}
+                loop={true}
+                slidesPerView={width > 767 ? 3 : 1}
+                autoplay={true}
+                coverflowEffect={{
+                    rotate: 0,
+                    stretch: 0,
+                    depth: 100,
+                    modifier: 2.5,
+                }}
+                pagination={{ el: '.swiper-pagination', clickable: true }}
+                navigation={{
+                    nextEl: '.swiper-button-next',
+                    prevEl: '.swiper-button-prev',
+                    clickable: true,
+                }}
+                modules={[EffectCoverflow, Pagination, Navigation]}
+                className="swiper_container"
+            >
+                {
+                    slideImages?.map((slideImage) =>
+                        <SwiperSlide key={slideImage?.title}>
+                            <img onClick={() => navigate(`/book-details/${slideImage?._id}`)} src={`https://covers.openlibrary.org/b/isbn/${slideImage?.isbn}-L.jpg`} className='!rounded-sm hover:scale-105 transition-all cursor-pointer !object-scale-down md:!min-h-[300px] md:!w-full md:!h-full' alt="slide_image" />
+                        </SwiperSlide>
+                    )
+                }
+                <div className="slider-controler">
+                    <div className="swiper-button-prev slider-arrow">
+                        <ion-icon name="arrow-back-outline"></ion-icon>
+                    </div>
+                    <div className="swiper-button-next slider-arrow">
+                        <ion-icon name="arrow-forward-outline"></ion-icon>
+                    </div>
+                    <div className="swiper-pagination"></div>
+                </div>
+            </Swiper>
+        </div >
     );
 }
 
-const variants = {
-    enter: ({ direction }) => {
-        return { scale: 0.2, x: direction < 1 ? 50 : -50, opacity: 0 };
-    },
-    center: ({ position }) => {
-        return {
-            scale: position() === 'center' ? 1 : 0.7,
-            x: 0,
-            zIndex: zIndex[position()],
-            opacity: 1,
-        };
-    },
-    exit: ({ direction }) => {
-        return { scale: 0.2, x: direction < 1 ? -50 : 50, opacity: 0 };
-    },
-};
-
-const zIndex = {
-    left: 1,
-    center: 2,
-    right: 1,
-};
+export default Carousel;

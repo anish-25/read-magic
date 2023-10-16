@@ -1,7 +1,6 @@
 const asyncHandler = require('express-async-handler')
 const User = require('../models/user.model')
 const Book = require('../models/book.model')
-const Cart = require('../models/cart.model')
 const axios = require('axios')
 require('dotenv').config()
 

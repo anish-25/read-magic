@@ -1,10 +1,8 @@
 const asyncHandler = require('express-async-handler')
 const User = require('../models/user.model')
-const Post = require('../models/book.model')
 const bcrypt = require('bcryptjs')
 const jwt = require('jsonwebtoken')
-const nodemailer = require('nodemailer')
-const { createTokens, replaceWithFirebaseUrl, getUserAvatar } = require('../utils/helpers')
+const { createTokens } = require('../utils/helpers')
 const { default: mongoose } = require('mongoose')
 require('dotenv').config()
 
@@ -16,10 +14,7 @@ const registerUser = asyncHandler(async (req, res) => {
         res.status(400).json({
             message: "All fields are mandatory"
         })
-
     }
-    //Check if User exists
-
     const userExists = await User.findOne({ email })
     if (userExists) {
         return res.status(400).json({
@@ -27,7 +22,6 @@ const registerUser = asyncHandler(async (req, res) => {
         })
     }
     else {
-        //Create User
         const user = await User.create({
             name,
             username,
@@ -65,11 +59,8 @@ const checkEmail = asyncHandler(async (req, res) => {
 
 const loginUser = asyncHandler(async (req, res) => {
     const { email, password } = req.body
-
-    //Check for User
     const user = await User.findOne({ $or: [{ email }, { username: email }] })
     if (user && (await bcrypt.compare(password, user.password))) {
-        //JWT
         createTokens(user, req, res)
     }
     else {
@@ -85,7 +76,6 @@ const loginUser = asyncHandler(async (req, res) => {
 const verifyOtp = asyncHandler(async (req, res) => {
     const { email, otp } = req.body
     const userExists = await User.findOne({ email })
-    //Check for User
     if (userExists) {
         if (otp == 1234) {
             let { id, email, name, isEmailVerified, createdAt, updatedAt } = userExists
@@ -116,7 +106,6 @@ const getUser = asyncHandler(async (req, res) => {
             const user = await User.findById(identifier)
             if (user) {
                 const { password, ...rest } = user._doc
-                rest.avatar = await getUserAvatar(user._id)
                 console.log(rest)
                 return res.status(200).json(rest)
             }
@@ -126,7 +115,6 @@ const getUser = asyncHandler(async (req, res) => {
             const user = await User.findOne({ username: identifier })
             if (user) {
                 const { password, ...rest } = user._doc
-                rest.avatar = await getUserAvatar(user._id)
                 return res.status(200).json(rest)
             }
             return res.status(400).json({ message: "User doesn't exist" })
