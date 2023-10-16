@@ -35,7 +35,7 @@ const PopularPage = () => {
   if (loader || !popularBooks?.data?.length) return <Loader />
   return (
     <div className="w-full flex flex-col justify-center items-center py-5">
-      <Typography className="text-2xl text-[#e59499] font-semibold">Popular Books</Typography>
+      <Typography className="md:text-2xl text-lg text-[#e59499] font-semibold">Popular Books</Typography>
       <div className="min-h-[60vh]">
         <div className="my-10 grid grid-cols-1 lg:grid-cols-2 gap-8">
           {

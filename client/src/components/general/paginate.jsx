@@ -27,7 +27,7 @@ export default function Pagination({
                     >
                         <span><ArrowLeft color="#e59499" size={23} /></span>
                     </button>
-                    <div className="flex justify-between w-full items-center space-x-4 !mx-10 text-sm font-semibold">
+                    <div className="flex justify-between w-full items-center space-x-2 md:space-x-4 !mx-10 text-sm font-semibold">
                         {
                             Array.from({ length: Math.ceil(totalPosts / postsPerPage) }, (_, index) => (
                                 index + 1 == currentPage - 1 || (index + 1 >= currentPage && index + 1 < currentPage + 6 && index + 1 !== Math.ceil(totalPosts / postsPerPage) - 4) || (index + 1 >= Math.ceil(totalPosts / postsPerPage) - 1) ?

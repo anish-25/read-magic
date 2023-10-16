@@ -91,7 +91,7 @@ const SearchModal = () => {
             <DialogTrigger><Search className="text-gray-600" /></DialogTrigger>
             <DialogContent className="bg-white">
                 <DialogHeader>
-                    <DialogTitle>Search for a book using title or author</DialogTitle>
+                    <DialogTitle className="text-sm text-left md:text-lg md:text-center">Search for a book using title or author</DialogTitle>
                     <DialogDescription className={'min-h-[50vh] rounded px-3 flex flex-col gap-8 justify-center items-center'}>
                         <FormInput name="search" value={searchTerm} error={false} errorMessage={""} onChange={handleChange} label={""} Icon={Search} placeholder={"Angels & Demons or J.K Rowling"} type={"text"} />
                         <div id="scrollableDiv" className="w-full flex flex-col min-h-[60vh]  max-h-[60vh] overflow-y-auto gap-3">

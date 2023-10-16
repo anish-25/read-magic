@@ -81,7 +81,7 @@ const Header = () => {
             })}
           </ul>
         </div>
-        <div className="flex md:hidden space-x-6">
+        <div className="flex md:hidden space-x-2 justify-center items-center">
           <SearchModal key={Search} />
 
           <Drawer open={isOpen} onOpenChange={setIsOpen}>

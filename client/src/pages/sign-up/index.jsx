@@ -1,7 +1,7 @@
-import React, { useMemo, useState } from 'react'
+import { useMemo, useState } from 'react'
 import Typography from '../../components/general/typography'
 import FormInput from '../../components/general/form-input'
-import { Lock, Mail, User, UserCog2 } from 'lucide-react'
+import {  Mail, User, UserCog2 } from 'lucide-react'
 import Button from '../../components/general/button'
 import logos from '../../assets/logos'
 import ImageWrapper from '../../components/data-renderers/image-wrapper'
@@ -119,14 +119,14 @@ const SignUpPage = () => {
         <FormInput name={'email'} error={errors.email.state} errorMessage={errors.email.message} onChange={handleChange} label={"Email"} Icon={Mail} placeholder={"Enter your email"} type={"email"} />
         <FormInput name={'username'} error={errors.username.state} errorMessage={errors.username.message} onChange={handleChange} label={"Username"} Icon={UserCog2} placeholder={"Choose a username"} type={"text"} />
         <Button type="submit" className="mt-5 rounded-[9.963px] py-3 bg-gradient-to-r from-[#FFA7A7] via-[#FFA7A7] to-[#FF014E] hover:opacity-80 transition-all duration-150 w-full">Sign Up</Button>
-        <Button className="mt-5 rounded-[9.963px] py-3 transition-all text-[#797979] space-x-5 bg-transparent duration-150 w-full hover:bg-gray-100 border">
+        <Button className="mt-5 rounded-[9.963px] py-3 transition-all text-[#797979] space-x-5 bg-transparent duration-150 w-full hover:bg-gray-50 border">
           <span><img src={logos.Google} className="md:w-7 md:h-7 h-5 w-5" alt="Google" /></span>
           <Typography className=" md:text-base text-sm">
             Sign Up with Google
           </Typography>
         </Button>
-        <Typography className="my-5 text-sm">
-          Already have an account? <CustomLink className="text-[#e59499] hover:text-[#fd6a73]" to="/sign-in">Sign In</CustomLink>
+        <Typography className="my-5 text-xs md:text-sm">
+          Already have an account? <CustomLink className="text-[#e59499] hover:text-[#fd6a73] text-xs md:text-sm" to="/sign-in">Sign In</CustomLink>
         </Typography>
 
       </form>

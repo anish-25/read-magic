@@ -5,29 +5,18 @@ const helmet = require('helmet')
 const cookieParser = require('cookie-parser')
 const path = require('path')
 const csvToJson = require('csvtojson')
-
 const cors = require('cors')
 const multer = require('multer')
+
 const { verifyToken } = require('./middlewares/verifyToken')
-const { v4: uuidv4 } = require('uuid');
+const Book = require('./models/book.model')
 
 require('dotenv').config()
 const port = process.env.PORT
 const app = express()
 
-const admin = require('firebase-admin');
-const serviceAccount = require('./firebase-cred.json.json')
-const Book = require('./models/book.model')
-admin.initializeApp({
-    credential: admin.credential.cert(serviceAccount),
-    storageBucket: 'gs://chadify-c49d8.appspot.com/'
-});
-
-const bucket = admin.storage().bucket();
-
 mongoose.connect(process.env.MONGO_URI, () => console.log("Connected"))
 
-// app.use(cors({ origin: 'https://chadify-client.vercel.app', credentials: true }))
 app.use(cors())
 app.use(express.json())
 app.use(morgan('common'))
@@ -44,11 +33,11 @@ app.post('/api/upload', [verifyToken, upload.single("file")], (req, res) => {
         if (!file) {
             return res.status(400).json({ error: 'No file received' });
         }
-        if(!req.user.isAdmin) return res.status(401).json({message:"Unauthorized"})
+        if (!req.user.isAdmin) return res.status(401).json({ message: "Unauthorized" })
         csvToJson().fromString(file.toString()).then(async (jsonObj) => {
             let filtered = jsonObj.filter(post => post?.authors && post?.isbn)
             for (const bookData of filtered) {
-                const newBook = new Book({...bookData,user:req.user.id});
+                const newBook = new Book({ ...bookData, user: req.user.id });
                 try {
                     await newBook.save();
                 } catch (error) {

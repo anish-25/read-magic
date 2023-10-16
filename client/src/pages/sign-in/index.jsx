@@ -107,14 +107,14 @@ const SignInPage = () => {
                 <FormInput autoComplete="on" error={errors.email.state} errorMessage={errors.email.message} name="email" onChange={handleChange} label={"Email"} Icon={Mail} placeholder={"Enter your email"} type={"email"} />
                 <FormInput name="password" error={errors.password.state} errorMessage={errors.password.message} onChange={handleChange} label={"Password"} Icon={Lock} placeholder={"Enter your password"} type={"password"} />
                 <Button disabled={signInButtonLoader} loader={signInButtonLoader} type="submit" className="mt-5 rounded-[9.963px] py-3 bg-gradient-to-r from-[#FFA7A7] via-[#FFA7A7] to-[#FF014E] hover:opacity-80 transition-all duration-150 w-full">Sign In</Button>
-                <Button className="mt-5 rounded-[9.963px] py-3 transition-all text-[#797979] space-x-5 bg-transparent duration-150 w-full hover:bg-gray-100 border">
+                <Button className="mt-5 rounded-[9.963px] py-3 transition-all text-[#797979] space-x-5 bg-transparent duration-150 w-full hover:bg-gray-50 border">
                     <span><img src={logos.Google} className=" md:w-7 md:h-7 h-5 w-5" alt="Google" /></span>
                     <Typography className=" md:text-base text-sm">
                         Sign In with Google
                     </Typography>
                 </Button>
-                <Typography className="my-5 text-sm">
-                    Don&apos;t have an account? <CustomLink className="text-[#e59499] hover:text-[#fd6a73]" to="/sign-up">Sign Up</CustomLink>
+                <Typography className="my-5 text-xs md:text-sm">
+                    Don&apos;t have an account? <CustomLink className="text-[#e59499] hover:text-[#fd6a73] text-xs md:text-sm" to="/sign-up">Sign Up</CustomLink>
                 </Typography>
             </form>
         </div>

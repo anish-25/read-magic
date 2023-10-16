@@ -7,7 +7,6 @@ import { useEffect } from "react";
 import { getPopularBooks } from "../../services/book.services";
 import { hideLoader, showLoader } from "../../slices/loaderSlice";
 import Loader from "../../components/layout/loader";
-import Pagination from "../../components/general/paginate";
 
 const slideImages = [
     images.HeroImage, images.HeroImage2, images.HeroImage3
@@ -36,7 +35,7 @@ const LandingPage = () => {
     return (
         <>
             <div className="flex justify-center items-center gap-24 min-h-[500px] w-full">
-                <div className="max-w-[80vw] !overflow-hidden">
+                <div className="max-w-[100vw] !overflow-hidden">
                     <HeroCarousel slideImages={slideImages} />
                 </div>
             </div>

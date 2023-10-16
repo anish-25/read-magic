@@ -109,8 +109,8 @@ const CreatePasswordPage = () => {
         <FormInput name={'password'} error={errors.password.state} errorMessage={errors.password.message} onChange={handleChange} label={"Choose Password"} Icon={Lock} placeholder={"Minimum 8 characters"} type={"password"} />
         <FormInput name={'confirmPassword'} error={errors.confirmPassword.state} errorMessage={errors.confirmPassword.message} onChange={handleChange} label={"Confirm Password"} Icon={Lock} placeholder={"Confirm password"} type={"password"} />
         <Button type="submit" className="mt-5 rounded-[9.963px] py-3 bg-gradient-to-r from-[#FFA7A7] via-[#FFA7A7] to-[#FF014E] hover:opacity-80 transition-all duration-150 w-full">Save and Continue</Button>
-        <Typography className="my-5 text-sm">
-          Already have an account? <CustomLink className="text-[#e59499] hover:text-[#fd6a73]" to="/sign-in">Sign In</CustomLink>
+        <Typography className="my-5 text-xs md:text-sm">
+          Already have an account? <CustomLink className="text-[#e59499] hover:text-[#fd6a73] text-xs md:text-sm" to="/sign-in">Sign In</CustomLink>
         </Typography>
 
       </form>
