@@ -55,9 +55,12 @@ npm run dev
 - **Client:**
 - Vite
 - React
+- Redux.js
 
 - **Server:**
 - Express.js
+- Node.js
+- MongoDB (Database)
 
 ## Features
 
