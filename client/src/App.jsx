@@ -1,4 +1,3 @@
-import 'react-loading-skeleton/dist/skeleton.css'
 import AllRoutes from './routes'
 import { useDispatch } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
