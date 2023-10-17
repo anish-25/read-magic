@@ -62,7 +62,7 @@ const CheckoutPage = () => {
                   <ImageWrapper className="w-[50px]" src={`https://covers.openlibrary.org/b/isbn/${item?.isbn}-S.jpg`} />
                 </div>
                 <div className="w-[80%] flex flex-col items-start justify-center">
-                  <Typography className="!text-sm font-semibold text-left">{item?.title?.length > 40 ? `${item?.title?.slice(0, 40)}...` : item?.title}</Typography>
+                  <Typography className="!text-sm font-semibold text-left cursor-pointer" onClick={() => { navigate(`/book-details/${item?._id}`) }}>{item?.title?.length > 40 ? `${item?.title?.slice(0, 40)}...` : item?.title}</Typography>
                   <Typography className="!text-xs text-gray-400 text-left">{item?.authors}</Typography>
                   <Typography className="!text-sm mt-3 font-semibold text-gray-800 flex tracking-wider">{item?.quantity} x <span className="flex justify-center items-center"><IndianRupee size={12} />{item?.price}</span></Typography>
                 </div>
