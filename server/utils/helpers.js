@@ -2,7 +2,7 @@ const jwt = require('jsonwebtoken')
 const firebase = require('../firebase')
 
 const createTokens = async (user, req, res) => {
-  const accessToken = jwt.sign({ "username": user.name, "id": user.id, "isAdmin": user.isAdmin }, process.env.ACCESS_TOKEN_SECRET, { expiresIn: '1d' })
+  const accessToken = jwt.sign({ "username": user.name, "id": user.id, "isAdmin": user.isAdmin }, process.env.ACCESS_TOKEN_SECRET, { expiresIn: '15m' })
   const refreshToken = jwt.sign({ "username": user.name, "id": user.id, "isAdmin": user.isAdmin }, process.env.REFRESH_TOKEN_SECRET, { expiresIn: '1d' })
   await getFireBaseUrl(user)
   res.status(201)

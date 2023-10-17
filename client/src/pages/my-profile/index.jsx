@@ -53,10 +53,12 @@ const ProfilePage = () => {
         }
     };
     const handleChange = (e) => {
-        setUserInputs((prevState) => ({
-            ...prevState,
-            [e.target.name]: e.target.value
-        }))
+        if (editing && e.target.name !== 'username' && e.target.name !== 'email') {
+            setUserInputs((prevState) => ({
+                ...prevState,
+                [e.target.name]: e.target.value
+            }))
+        }
     }
     const handleSave = (e) => {
         e.preventDefault()

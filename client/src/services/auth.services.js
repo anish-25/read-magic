@@ -1,7 +1,9 @@
 import { publicEndpoints } from "../axios/endpoints"
 import axios from "../axios/gateWay"
-import { login } from "../slices/authSlice"
+import { login, logout, updateTokens } from "../slices/authSlice"
 import { hideLoader } from "../slices/loaderSlice"
+import store from "../store/store"
+
 
 export const handleSignIn = (userInputs) => {
    return axios.post(publicEndpoints.signIn, userInputs)
@@ -19,7 +21,7 @@ export const handleSignUp = (userInputs) => {
    return axios.post(publicEndpoints.signUp, userInputs)
 }
 
-export const handleRefresh = (token, dispatch, navigate) => {
+export const handleRefresh = async (token, dispatch, navigate) => {
    return axios.post(publicEndpoints.refresh, { refreshToken: token }).then(res => {
       if (res?.data?.accessToken) {
          let data = {
@@ -29,11 +31,22 @@ export const handleRefresh = (token, dispatch, navigate) => {
             isAuthenticated: true
          }
          localStorage.setItem('refresh', res?.data?.refreshToken?.token)
-         dispatch(login(data))
+         if (store.getState().auth.user?.id) {
+            updateTokens({ accessToken: data?.accessToken, refreshToken: data?.refreshToken })
+         }
+         else {
+            dispatch(login(data))
+         }
+         return res?.data?.accessToken?.token
       }
    }).catch(err => {
       console.log(err)
-      navigate('/sign-in')
+      if (navigate) {
+         navigate('/sign-in')
+      }
+      else {
+         dispatch(logout())
+      }
    }).finally(() => {
       dispatch(hideLoader('pageLoader'))
    })

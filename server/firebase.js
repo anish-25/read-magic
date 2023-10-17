@@ -2,7 +2,7 @@ const firebase = require('firebase/compat/app');
 require('firebase/compat/storage');
 
 const firebaseConfig = {
-    apiKey: "AIzaSyCKoUXIWU454QNsNAIBHHItwLkHAZS5klg",
+    apiKey: process.env.FIREBASE_API_KEY,
     authDomain: "readmagic-1acec.firebaseapp.com",
     projectId: "readmagic-1acec",
     storageBucket: "readmagic-1acec.appspot.com",
