@@ -42,11 +42,12 @@ NODE_ENV=development
 PORT=YOUR_SERVER_PORT
 MONGO_URI=YOUR_MONGO_DB_URI
 GOOGLE_BOOKS_API=https://www.googleapis.com/books/v1/volumes
+FIREBASE_API_KEY = FIREBASE_API_KEY
 ACCESS_TOKEN_SECRET=YOUR_ACCESS_TOKEN_SECRET
 REFRESH_TOKEN_SECRET=YOUR_REFRESH_TOKEN_SECRET
 Replace the placeholders with your specific configuration details.
 
-4. Start the server in development mode:
+5. Start the server in development mode:
 npm run dev
 
 
