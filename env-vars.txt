@@ -1,0 +1,14 @@
+Client:
+Create a .env file inside client folder and paste the following values.
+VITE_SERVER_URL = 'https://read-magic-server.vercel.app/api'
+
+Server:
+Create a .env file inside server folder and paste the following values.
+NODE_ENV = "development"
+CLIENT_URL = "https://readmagic.vercel.app"
+PORT = 5000
+MONGO_URI = 'mongodb+srv://anish:testdatabase@readmagic.7mqlp1h.mongodb.net/'
+FIREBASE_API_KEY = "AIzaSyCKoUXIWU454QNsNAIBHHItwLkHAZS5klg"
+GOOGLE_BOOKS_API =  'https://www.googleapis.com/books/v1/volumes'
+ACCESS_TOKEN_SECRET =f5447897f79bd1f78a0b00c31c980aa1f9a8d87ec8f593eb102516fe0f2d8f4731fb2a54012803d9777bdb8cf29ac779efac1aefaf03b8cde5b4673186637948
+REFRESH_TOKEN_SECRET = 9d12f0b4fb1f1858289b3bc17638cd30cc855a98216c5e2040672f32e814d0543004e58dac79c3d2bde949cd1b09507cf6f1c0532e285cf1ab5f4847142467f7

@@ -14,9 +14,13 @@ const createTokens = async (user, req, res) => {
   })
 }
 const getFireBaseUrl = async (user) => {
-  const storageRef = firebase.storage().ref('avatars/' + user.id + '.png')
-  const url = await storageRef.getDownloadURL();
-  user.avatar = url
+  try {
+    const storageRef = firebase.storage().ref('avatars/' + user.id + '.png')
+    const url = await storageRef.getDownloadURL();
+    user.avatar = url
+  } catch (err) {
+    user.avatar = ""
+  }
 }
 
 module.exports = { createTokens, getFireBaseUrl }
